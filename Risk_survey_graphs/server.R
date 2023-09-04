@@ -23,11 +23,13 @@ library(readxl)
 node_name <- Sys.info()["nodename"]
 
 # location_files_for_app <- 'C:/Users/bro87m/R/'
-# "C:/Users/ouz001/working_from_home_post_Sep2022/BB_Risk"
+
+
+## the below code just says if its Jackie machine "TOPAZ-GW" look for data on Jackie computer otherwise look for data on Brendan computer
 if (node_name=="TOPAZ-GW" ) {
 location_files_for_app <- 'C:/Users/ouz001/working_from_home_post_Sep2022/BB_Risk/'
 } else {
-location_files_for_app <- "C:/Users/bro87m/R/"} # I am not sure this will work?
+location_files_for_app <- "C:/Users/bro87m/R/"} 
 #################################################################################
 
 ######BB 
