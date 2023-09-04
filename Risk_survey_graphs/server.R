@@ -22,12 +22,12 @@ library(readxl)
 #---BB note: you will need the below code if you are swapping between machines probably don't need to worry about it now
 node_name <- Sys.info()["nodename"]
 
-location_files_for_app <- 'C:/Users/bro87m/R/'
-
-# if (node_name=="TOPAZ-GW" ) {
-  # location_files_for_app <- 'B:/Shiny/Jackie_Ouzman/updated_app_data/'
-  # } else {
-  # location_files_for_app <- "/datasets/work/lw-soildatarepo/work/Shiny/Jackie_Ouzman/updated_app_data/"} # I am not sure this will work?
+# location_files_for_app <- 'C:/Users/bro87m/R/'
+# "C:/Users/ouz001/working_from_home_post_Sep2022/BB_Risk"
+if (node_name=="TOPAZ-GW" ) {
+location_files_for_app <- 'C:/Users/ouz001/working_from_home_post_Sep2022/BB_Risk/'
+} else {
+location_files_for_app <- "C:/Users/bro87m/R/"} # I am not sure this will work?
 #################################################################################
 
 ######BB 
