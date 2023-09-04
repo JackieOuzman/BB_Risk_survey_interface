@@ -44,7 +44,8 @@ library(readxl)
 
         # Show a plot 
         mainPanel(
-            plotOutput("plolt1")
+            plotOutput("plolt1"),
+            verbatimTextOutput("test")
         )
     )
 

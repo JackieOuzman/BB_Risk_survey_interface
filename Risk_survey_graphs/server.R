@@ -1,13 +1,4 @@
 #
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
-
 library(shiny)
 library(ggplot2)
 library(tidyverse)
@@ -27,17 +18,17 @@ node_name <- Sys.info()["nodename"]
 
 ## the below code just says if its Jackie machine "TOPAZ-GW" look for data on Jackie computer otherwise look for data on Brendan computer
 if (node_name=="TOPAZ-GW" ) {
-location_files_for_app <- 'C:/Users/ouz001/working_from_home_post_Sep2022/BB_Risk/'
+  location_files_for_app <- 'C:/Users/ouz001/working_from_home_post_Sep2022/BB_Risk/'
 } else {
-location_files_for_app <- "C:/Users/bro87m/R/"} 
+  location_files_for_app <- "C:/Users/bro87m/R/"} 
 #################################################################################
 
 ######BB 
 
 df <- read_excel(
   paste0(location_files_for_app,
-  "Copy of Overview of Snapshot Survey for RiskWise SYD meeting.xlsx"),
-                    sheet = "Data")
+         "Copy of Overview of Snapshot Survey for RiskWise SYD meeting.xlsx"),
+  sheet = "Data")
 
 #---BB note: This is where you could have a API and a download button see:https://shiny.posit.co/r/reference/shiny/0.11/downloadbutton
 #---BB note: This is just info on a API https://www.dataquest.io/blog/r-api-tutorial/
@@ -51,8 +42,8 @@ df <- read_excel(
 #---BB note: I will show you how to do this not super easy but very doable
 
 #### get a unique list of names from the file. I am using this to manually code the list of sites
- list_of_workshop_names <- df %>% 
-   distinct(`Workshop ID`)
+list_of_workshop_names <- df %>% 
+  distinct(`Workshop ID`)
 
 #---BB note: work out what widget you want to use to select the w/s with https://shiny.posit.co/r/gallery/widgets/widget-gallery/
 
@@ -67,7 +58,7 @@ function(input, output, session) {
   
   
   
-#---BB note: output$plotly1 <- renderPlotly({ }) https://plotly-r.com/controlling-tooltips.html
+  #---BB note: output$plotly1 <- renderPlotly({ }) https://plotly-r.com/controlling-tooltips.html
   
   
   output$plolt1 <- renderPlot({
@@ -121,17 +112,17 @@ function(input, output, session) {
     
     
     
-      
+    
   })
-
+  
+  
+  
+  function(input, output) {
     
+    # You can access the values of the widget (as a vector)
+    # with input$checkGroup, e.g.
+    output$value <- renderPrint({ input$checkGroup })
     
-    function(input, output) {
-      
-      # You can access the values of the widget (as a vector)
-      # with input$checkGroup, e.g.
-      output$value <- renderPrint({ input$checkGroup })
-      
-    }
-
+  }
+  
 }
