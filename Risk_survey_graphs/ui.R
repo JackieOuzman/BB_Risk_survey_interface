@@ -19,18 +19,20 @@ library(readxl)
            #Application title
                titlePanel("BB Risk Data"),
                
-               radioButtons("workshop_ID", 
+              selectInput("workshop_ID", 
                             label = h3("List of workshops"),
-                            choices = list("neshalby" = "1204neshalby", 
-                                           "EP" = "0206ep", 
+                            choices = list("neshalby" = "1204neshalby",
+                                           "EP" = "0206ep",
                                            "Hart" = "1807hart",
                                            "FR" = "1907fr",
                                            "Temora" = "2107temora",
                                            "Nss" = "2607nss",
                                            "mnhrz" = "2807mnhrz",
                                            "Birchip" = "0408birchip",
-                                           "dalwallin" = "1408dalwallinu"), 
-                            selected = "1807hart"),
+                                           "dalwallin" = "1408dalwallinu"),
+                            selected = "1807hart")
+                          #"Names")
+                          ,
          
           
           
@@ -46,6 +48,7 @@ library(readxl)
         mainPanel(
             plotOutput("plolt1"),
             verbatimTextOutput("test")
+            
         )
     )
 
