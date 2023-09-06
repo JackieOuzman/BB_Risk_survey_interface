@@ -1,6 +1,11 @@
 library(shiny)
 library(dplyr)
 
+#some helpful notes
+#https://www.r-bloggers.com/2022/08/observe-function-in-r-shiny-how-to-implement-a-reactive-observer/
+
+
+
 raw_data <-  read_excel("C:/Users/ouz001/working_from_home_post_Sep2022/BB_Risk/Copy of Overview of Snapshot Survey for RiskWise SYD meeting.xlsx",
   sheet = "Data")
 
