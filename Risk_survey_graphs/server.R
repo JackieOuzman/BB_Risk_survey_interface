@@ -68,7 +68,7 @@ raw_data <- read_excel(
 # Define server logic required to draw a histogram
 function(input, output, session) {
   
-  #output$test <-renderPrint({head(reactive_df(),10)}) # this is just a step for testing
+  
   
   #---BB note: output$plotly1 <- renderPlotly({ }) https://plotly-r.com/controlling-tooltips.html
   
@@ -86,9 +86,15 @@ function(input, output, session) {
   
   
   
-  ### manipulate data for plotting
+  
+  
+  
+  
+  
+  
   output$plolt1 <- renderPlot({
     
+    ### manipulate data for plotting
     #---BB note: subset the data and rename some clms - you may not need this step 
     df_selected <- raw_data %>% select("Workshop ID" ,
                                  "Respondant",
@@ -143,3 +149,10 @@ function(input, output, session) {
   
   
 }
+
+
+#### TASK TO WORK ON ###
+#1. move the data manipulation step so its outside the render plot - so make it reactive
+#2. get the box plot to draw on the reactive df using ()
+#3. look at the API code that BB will use to acess the data
+#4. split the graphs off in to different ones.
