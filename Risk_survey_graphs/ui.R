@@ -19,7 +19,7 @@ library(readxl)
            #Application title
                titlePanel("BB Risk Data"),
                
-              selectInput("workshop_ID", 
+              selectInput("workshop_ID",
                             label = h3("List of workshops"),
                             choices = list("neshalby" = "1204neshalby",
                                            "EP" = "0206ep",
@@ -30,10 +30,9 @@ library(readxl)
                                            "mnhrz" = "2807mnhrz",
                                            "Birchip" = "0408birchip",
                                            "dalwallin" = "1408dalwallinu"),
-                            selected = "1807hart")
-                          #"Names")
-                          ,
-         
+                            selected = "1807hart"),
+                          
+        
           
           
 
@@ -46,8 +45,7 @@ library(readxl)
 
         # Show a plot 
         mainPanel(
-            plotOutput("plolt1"),
-            verbatimTextOutput("test")
+            plotOutput("plolt1")
             
         )
     )

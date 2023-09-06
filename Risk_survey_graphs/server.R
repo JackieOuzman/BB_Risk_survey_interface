@@ -34,21 +34,13 @@ if (node_name=="TOPAZ-GW" ) {
 
 ######BB 
 
-df <- read_excel(
+
+
+raw_data <- read_excel(
   paste0(location_files_for_app,
          "Copy of Overview of Snapshot Survey for RiskWise SYD meeting.xlsx"),
   sheet = "Data")
 
-
-
-#--------------------- STUCK HERE --------------------------------------------#
-#https://www.google.com/search?q=r+shiny+how+to+make+a+dynamic+drop+down+list&rlz=1C1GCEB_enAU1023AU1023&oq=r+shiny+how+to+make+a+dynamic+drop+down+list&aqs=chrome..69i57j69i64.12997j0j15&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:11be4898,vid:mHRVFMQ54ZE
-reactive_df <- reactive(df)
-observe({
-  updateSelectInput(session, "workshop_ID",
-                    choices = distinct(df$`workshop ID`))
-})
-#--------------------- STUCK HERE --------------------------------------------#
 
 
 
@@ -64,8 +56,6 @@ observe({
 #---BB note: I will show you how to do this not super easy but very doable
 
 #### get a unique list of names from the file. I am using this to manually code the list of sites
-list_of_workshop_names <- df %>% 
-  distinct(`Workshop ID`)
 
 #---BB note: work out what widget you want to use to select the w/s with https://shiny.posit.co/r/gallery/widgets/widget-gallery/
 
@@ -78,18 +68,29 @@ list_of_workshop_names <- df %>%
 # Define server logic required to draw a histogram
 function(input, output, session) {
   
-  output$test <-renderPrint({head(reactive_df(),10)}) # this is just a step for testing
+  #output$test <-renderPrint({head(reactive_df(),10)}) # this is just a step for testing
   
   #---BB note: output$plotly1 <- renderPlotly({ }) https://plotly-r.com/controlling-tooltips.html
   
+  #### this is for the dynamic drop down list
+  observe({
+    workshop_ID_names <- unique(raw_data$`Workshop ID`)
+    
+    updateSelectInput(
+      session = session, 
+      inputId = "workshop_ID",
+      choices = workshop_ID_names,
+      selected = head(workshop_ID_names, 1)
+    )
+  })  
   
+  
+  
+  ### manipulate data for plotting
   output$plolt1 <- renderPlot({
     
-    
-    
-    
     #---BB note: subset the data and rename some clms - you may not need this step 
-    df_selected <- reactive_df() %>% select("Workshop ID" ,
+    df_selected <- raw_data %>% select("Workshop ID" ,
                                  "Respondant",
                                  "[2] Risk Aversion",
                                  "[3] Intuition Vs Calculation" ,
@@ -139,12 +140,6 @@ function(input, output, session) {
   
   
   
-  function(input, output) {
-    
-    # You can access the values of the widget (as a vector)
-    # with input$checkGroup, e.g.
-    output$value <- renderPrint({ input$checkGroup })
-    
-  }
+  
   
 }
