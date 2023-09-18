@@ -17,47 +17,15 @@ library(readxl)
 
 ###############################################################################
 
-#### Central location of the files the app will draw on - id the directory here ######################
-######################################################################################################
-#---BB note: you will need the below code if you are swapping between machines probably don't need to worry about it now
-node_name <- Sys.info()["nodename"]
-
-# location_files_for_app <- 'C:/Users/bro87m/R/'
-
-
-## the below code just says if its Jackie machine "TOPAZ-GW" look for data on Jackie computer otherwise look for data on Brendan computer
-if (node_name=="TOPAZ-GW" ) {
-  location_files_for_app <- 'C:/Users/ouz001/working_from_home_post_Sep2022/BB_Risk/'
-} else {
-  location_files_for_app <- "C:/Users/bro87m/R/"} 
-#################################################################################
-
-######BB 
+raw_data <- read.csv("https://kf.kobotoolbox.org/api/v2/assets/aBuC7N2fuqWo7BkJfgHYcX/export-settings/esRMkzGooa8ZgP76sAk677o/data.csv", sep=';')
+raw_data <- raw_data %>% rename( "Workshop ID"="The.facilitator.will.provide.you.with.a.workshop.ID...please.provide.it.here.")
 
 
 
-raw_data <- read_excel(
-  paste0(location_files_for_app,
-         "Copy of Overview of Snapshot Survey for RiskWise SYD meeting.xlsx"),
-  sheet = "Data")
-
-
-
-
-#---BB note: This is where you could have a API and a download button see:https://shiny.posit.co/r/reference/shiny/0.11/downloadbutton
-#---BB note: This is just info on a API https://www.dataquest.io/blog/r-api-tutorial/
 
 
 #---BB note: Might need to tidy up your df selecting a subset of clms?
 
-
-#---BB note: get a distinct list of w/s names this will need to be an extra step to make this reactive
-#---BB note: that means it will be used as in input and then inside the add in the middle step.
-#---BB note: I will show you how to do this not super easy but very doable
-
-#### get a unique list of names from the file. I am using this to manually code the list of sites
-
-#---BB note: work out what widget you want to use to select the w/s with https://shiny.posit.co/r/gallery/widgets/widget-gallery/
 
 
 
@@ -95,16 +63,17 @@ function(input, output, session) {
   output$plolt1 <- renderPlot({
     
     ### manipulate data for plotting
-    #---BB note: subset the data and rename some clms - you may not need this step 
+    
+    
     df_selected <- raw_data %>% select("Workshop ID" ,
-                                 "Respondant",
-                                 "[2] Risk Aversion",
-                                 "[3] Intuition Vs Calculation" ,
-                                 "[4] Comfort with Decision Process"  
+                                      # "Respondant",
+                                       "X.Question.2..How.risk.averse.do.you.think.you.are.when.making.a....selected...decision." ,
+                                       "X.Question.3...What.balance.do.you.tend.to.have.between.intuition..gut.feel.informed.by.past.experience..and.numerical.calculation..data.driven..when.making.a....selected...decision." ,
+                                       "X.Question.4..How.comfortable.are.you.with.your.decision.process..not.outcome..when.making.current....selected...decisions."  
     ) %>% 
-      rename(  "Risk Aversion"                  =   "[2] Risk Aversion",
-               "Intuition Vs Calculation"       =   "[3] Intuition Vs Calculation",
-               "Comfort with Decision Process"  =   "[4] Comfort with Decision Process")
+      rename(  "Risk Aversion"                  =   "X.Question.2..How.risk.averse.do.you.think.you.are.when.making.a....selected...decision." ,
+               "Intuition Vs Calculation"       =   "X.Question.3...What.balance.do.you.tend.to.have.between.intuition..gut.feel.informed.by.past.experience..and.numerical.calculation..data.driven..when.making.a....selected...decision.",
+               "Comfort with Decision Process"  =   "X.Question.4..How.comfortable.are.you.with.your.decision.process..not.outcome..when.making.current....selected...decisions.")
     
     
     #---BB note: you may need to make your df long
@@ -122,7 +91,7 @@ function(input, output, session) {
     df_selected_wide_merge <- rbind(df_selected_wide_all,df_selected_wide_filtered )
     
     
-    ### Make a box plot
+    ### Make series of box plot
     
     df_selected_wide_merge %>%  
       filter(!is.na("score" )) %>% #removing any missing data 
@@ -154,5 +123,5 @@ function(input, output, session) {
 #### TASK TO WORK ON ###
 #1. move the data manipulation step so its outside the render plot - so make it reactive
 #2. get the box plot to draw on the reactive df using ()
-#3. look at the API code that BB will use to acess the data
-#4. split the graphs off in to different ones.
+
+#3. split the graphs off in to different ones.
